@@ -46,6 +46,7 @@ fn main() {
             }
             Numbers::Name(y) => {
                 println!("{}", y);
+                println!("{}", y);
             }
         }
     }
