@@ -1,52 +1,22 @@
 fn main() {
-    let mut names: Vec<&str> = vec!["gaurav", "manish", "shuva"];
+    let mut name: String = "Gaurav".to_string();
+    println!("{}", name);
 
-    // Updating a vector.
-    names.push("arnav");
+    // Since strigs are utf-8 encoded we can use nepali characters too.
+    name = "गौरभ".to_string();
+    println!("{}", name);
 
-    let second: &str = names[1];
+    let mut s: String = "Gulp".to_string();
+    let dots: &str = " ... ";
+    s.push_str(dots);
+    // we can still use dots because, push_str doesnt take ownership
+    println!("{}", dots);
 
-    println!("The Second element is {}", second);
+    // Basically same but, for a single char
+    s.push('.');
 
-    let fourth: Option<&&str> = names.get(2);
+    let s1: String = "Hello, ".to_string();
+    let s2: String = "World".to_string();
 
-    println!("{:?}", fourth);
-    match fourth {
-        Some(fourth) => println!("The fourth element is {}", fourth),
-        None => println!("No fourth element"),
-    }
-
-    let non_existant_vector: &&str = &names[1];
-
-    println!("{}", non_existant_vector);
-
-    for name in names {
-        println!("{}", name);
-    }
-
-    enum Numbers {
-        Int(i64),
-        Float(f64),
-        Name(String),
-    }
-
-    let nums: Vec<Numbers> = vec![
-        Numbers::Int(30),
-        Numbers::Float(3.14),
-        Numbers::Name(String::from("Thirty Two")),
-    ];
-
-    for num in nums {
-        match num {
-            Numbers::Int(z) => {
-                println!("{}", z);
-            }
-            Numbers::Float(x) => {
-                println!("{}", x);
-            }
-            Numbers::Name(y) => {
-                println!("{}", y);
-            }
-        }
-    }
+    let s3: String = s1 + &s2 + "121";
 }
