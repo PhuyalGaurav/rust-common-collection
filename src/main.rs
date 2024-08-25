@@ -1,43 +1,52 @@
+use std::collections::HashMap;
+
 fn main() {
-    let mut name: String = "Gaurav".to_string();
-    println!("{}", name);
+    // This is the syntax for creating a new hashmap.
+    let mut scores: HashMap<&str, i64> = HashMap::new();
 
-    // Since strigs are utf-8 encoded we can use nepali characters too.
-    name = "गौरभ".to_string();
-    println!("{}", name);
+    // We can add data to a hashmap using the insert method
+    scores.insert("Gaurav", 500);
+    scores.insert("Manish", 349);
 
-    let mut s: String = "Gulp".to_string();
-    let dots: &str = " ... ";
-    s.push_str(dots);
-    // we can still use dots because, push_str doesnt take ownership
-    println!("{}", dots);
-
-    // Basically same but, for a single char
-    s.push('.');
-
-    let s1: String = "Hello, ".to_string();
-    let s2: String = "World".to_string();
-
-    let s3: String = s1 + &s2 + "121";
-
-    // s1 cant be used becuase it is moved but s2 can since only a refrence is passe in the + operator
-    println!("{s2}");
-
-    // if we dont want to take ownership of anything we can use format macro
-    let format_s: String = format!("{s2}-{s3}");
-    println!("{format_s}");
-
-    let hello: &str = "नमस्ते";
-    // rust doesnt support indexing so we must slice it.
-    let aadi: String = hello[9..12].to_string();
-    println!("{aadi}");
-
-    //let aadi2: String = hello[0..1].to_string();
-    // This wont compile because indivisual bytes is not stored in strings
-    // error : byte index 1 is not a char boundary; it is inside 'न' (bytes 0..3) of `नमस्ते`|
-
-    // We can use the bytes indivisually by iterating over it :
-    for b in hello.bytes() {
-        println!("{b}");
+    // Using the get method on a hashmap returns us a Option of Type i64.
+    let gaurav_score: Option<&i64> = scores.get("Gaurav");
+    match gaurav_score {
+        Some(score) => {
+            println!("Gaurav's score is {}", score);
+        }
+        None => {
+            println!("Gaurav doesnt have a score");
+        }
     }
+
+    // Directly accessing using the unwrap_or method.
+    let manish_score: i64 = scores.get("Manish").copied().unwrap_or(0);
+    println!("{manish_score}");
+
+    // Iteraating over a hashmap
+    for (key, value) in &scores {
+        println!("{} : {}", key, value);
+    }
+
+    // We can update a value by overweiting it.
+    scores.insert("Gaurav", 200);
+    println!("{scores:?}");
+
+    // We can check if value exist and add only if no value is found
+    scores.entry("Gaurav").or_insert(50);
+    println!("{:?}", scores);
+
+    scores.entry("Himal").or_insert(50);
+    println!("{:?}", scores);
+
+    // We can change the value based on the previous value using derefrencing
+    let text: &str= "Hello World this is a new experience for me. I mean a whole new fucking language this is good though ngl.";
+    let mut count_words: HashMap<&str, u32> = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count_words: &mut u32 = count_words.entry(word).or_insert(0);
+        *count_words += 1;
+    }
+
+    println!("{:?}", count_words);
 }
